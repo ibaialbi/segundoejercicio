@@ -6,6 +6,15 @@ public class GlobPattern {
     }
 
     public boolean match(String text) {
-        return false;
+        if (text == null || text.length() != pattern.length())
+            return false;
+
+        for (int i = 0; i < pattern.length(); i++) {
+            char p = pattern.charAt(i);
+            if (p != '?' && p != text.charAt(i)) {
+                return false; // Si no es '?' y no coincide exactamente, falla
+            }
+        }
+        return true; // Si pasa todo, coincide
     }
 }
