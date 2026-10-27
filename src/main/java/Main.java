@@ -2,15 +2,23 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        if (args.length != 1) { // Comprueba si le pasaron exactamente 1 argumento
+        int exitCode = runLogic(args); // Llamamos a la lógica
+        if (exitCode != 0) {
+            System.exit(exitCode); // Solo hacemos exit en el main real
+        }
+    }
+
+    // Método que el Tester puede probar sin matar el programa
+    public static int runLogic(String[] args) {
+        if (args.length != 1) {
             System.out.println("Usage: $(COMMAND) [PATTERN]");
-            System.exit(-1);
+            return -1;
         }
 
         GlobPattern pattern = new GlobPattern(args[0]);
         Scanner scanner = new Scanner(System.in);
 
-        while (scanner.hasNextLine()) { // Lee linea por linea
+        while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
             if (pattern.match(line)) {
                 System.out.println("1");
@@ -19,5 +27,6 @@ public class Main {
             }
         }
         scanner.close();
+        return 0;
     }
 }
